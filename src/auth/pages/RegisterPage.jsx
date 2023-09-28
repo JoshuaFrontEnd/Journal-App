@@ -1,9 +1,11 @@
 // Al importar el componente 'Link' desde 'react-router-dom' se genera un conflicto debido al alcance de nombre con el componente 'Link' de 'MUI', para solucionar esto uso un alias, asignando el nombre 'RouterLink' al 'Link' de 'react-router-dom'
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
+import { startCreatingUserWithEmailPassword } from '../../store/auth';
 
 // Seteo datos por defecto del formulario
 const formData = {
@@ -20,6 +22,8 @@ const formValidations = {
 }
 
 export const RegisterPage = () => {
+
+  const dispatch = useDispatch();
 
   // Controlando que las validaciones solo se muestren la primera vez que se hace onSubmit en el formulario
   const [ formSubmitted, setFormSubmitted ] = useState( false );
@@ -42,8 +46,13 @@ export const RegisterPage = () => {
   // Evento "onSubmit" para enviar el formulario
   const onSubmit = ( event ) => {
     event.preventDefault();
+
     setFormSubmitted( true );
-    console.log( formState );
+
+    if ( !isFormValid ) return;
+
+    dispatch( startCreatingUserWithEmailPassword( formState ) );
+
    }
 
   return (
