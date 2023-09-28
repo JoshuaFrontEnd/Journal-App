@@ -33,6 +33,8 @@ export const RegisterPage = () => {
     onInputChange,
   } = useForm( formData, formValidations );
 
+  console.log( displayNameValid);
+
   // Evento "onSubmit" para enviar el formulario
   const onSubmit = ( event ) => {
     event.preventDefault();
