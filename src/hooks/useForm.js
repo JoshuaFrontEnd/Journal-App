@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const useForm = (initialForm = {}, formValidations = {}) => {
 
@@ -17,7 +17,20 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
   // Cada vez que haya un cambio en los datos del formulario "(formState)" voy a mandar a llamar la funcion "createValidators"
   useEffect(() => {
     createValidators();
-  }, [formState])
+  }, [ formState ])
+
+  // Para que el formulario sea valido, todas las funciones de validacion deben retornar "null", con que una no retorne este valor sera considerado invalido y mostrara el error correspondiente
+  const isFormValid = useMemo(() => {
+
+    for ( const formValue of Object.keys( formValidation ) ) {
+
+      if ( formValidation[ formValue ] !== null ) return false;
+
+    }
+
+    return true;
+
+  }, [ formValidation ])
 
 
   const onInputChange = ({ target }) => {
@@ -37,12 +50,12 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     const formCheckedValues = {};
 
     // Recorro el arreglo que declare en "RegisterPage" con los valores, condiciones y mensajes de error
-    for (const formField of Object.keys(formValidations)) {
+    for ( const formField of Object.keys(formValidations) ) {
 
       // Desestructuro el arreglo obteniendo la función de validación y el mensaje de error basado en el "formField"
-      const [fn, errorMessage] = formValidations[formField];
+      const [ fn, errorMessage ] = formValidations[formField];
 
-      console.log(fn(formState[formField]), errorMessage, formField);
+      // console.log( fn( formState[formField] ), errorMessage, formField );
 
       /* ----------------------------------------------------------------
         Acá estoy creando de manera dinamica un objeto que va construyendo los nombres de las propiedades tomando el valor que venga en el "formField" y sumandole a ese valor una cadena de texto de valor "Valid" y como valor de las propiedades, le asigno el valor de la ejecucion de la funcion "validacion" que le estoy enviando "(fn)", si el valor es "true", setea como valor de la propiedad el mensaje de error, si el valor es "false", setea como valor el objeto null
@@ -64,6 +77,8 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     // El nuevo valor de la validacion sera el objeto "formCheckedValues"
     setFormValidation( formCheckedValues );
 
+    console.log( formCheckedValues );
+
   }
 
   return {
@@ -72,5 +87,6 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     onInputChange,
     onResetForm,
     ...formValidation,
+    isFormValid
   }
 }

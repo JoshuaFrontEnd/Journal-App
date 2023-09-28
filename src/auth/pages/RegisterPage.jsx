@@ -1,4 +1,5 @@
 // Al importar el componente 'Link' desde 'react-router-dom' se genera un conflicto debido al alcance de nombre con el componente 'Link' de 'MUI', para solucionar esto uso un alias, asignando el nombre 'RouterLink' al 'Link' de 'react-router-dom'
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
@@ -6,9 +7,9 @@ import { useForm } from '../../hooks';
 
 // Seteo datos por defecto del formulario
 const formData = {
-  email: 'ioshi@gmail.com',
-  password: '123456',
-  displayName: 'Joshua Torres'
+  email: '',
+  password: '',
+  displayName: ''
 }
 
 // Seteo las validaciones de los campos del formulario, lo que estoy haciendo, es que por cada valor, mando una función de validación, y el mensaje a mostrar dependiendo del resultado de la validación
@@ -19,6 +20,9 @@ const formValidations = {
 }
 
 export const RegisterPage = () => {
+
+  // Controlando que las validaciones solo se muestren la primera vez que se hace onSubmit en el formulario
+  const [ formSubmitted, setFormSubmitted ] = useState( false );
 
   // Utilizo el Hook personalizado "useForm", para obtener los campos del formulario que necesito
   const {
@@ -33,17 +37,20 @@ export const RegisterPage = () => {
     onInputChange,
   } = useForm( formData, formValidations );
 
-  console.log( displayNameValid);
+  // console.log( displayNameValid);
 
   // Evento "onSubmit" para enviar el formulario
   const onSubmit = ( event ) => {
     event.preventDefault();
+    setFormSubmitted( true );
     console.log( formState );
    }
 
   return (
 
     <AuthLayout title='Crear cuenta'>
+
+      <h1>FormValid: { isFormValid ? 'Válido' : 'Incorrecto' }</h1>
 
       <form onSubmit={ onSubmit }>
 
@@ -58,6 +65,8 @@ export const RegisterPage = () => {
               name="displayName"
               value={ displayName }
               onChange={ onInputChange }
+              error={ !!displayNameValid && formSubmitted }
+              helperText={ displayNameValid }
             />
           </Grid>
 
@@ -70,6 +79,8 @@ export const RegisterPage = () => {
               name="email"
               value={ email }
               onChange={ onInputChange }
+              error={ !!emailValid && formSubmitted }
+              helperText={ emailValid }
             />
           </Grid>
 
@@ -82,6 +93,8 @@ export const RegisterPage = () => {
               name="password"
               value={ password }
               onChange={ onInputChange }
+              error={ !!passwordValid && formSubmitted }
+              helperText={ passwordValid }
             />
           </Grid>
 
