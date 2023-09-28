@@ -11,10 +11,27 @@ const formData = {
   displayName: 'Joshua Torres'
 }
 
+// Seteo las validaciones de los campos del formulario, lo que estoy haciendo, es que por cada valor, mando una función de validación, y el mensaje a mostrar dependiendo del resultado de la validación
+const formValidations = {
+  email: [ ( value ) => value.includes( '@' ), 'El correo debe de tener un @'],
+  password: [ ( value ) => value.length >= 6, 'El password debe de tener más de 6 letras.'],
+  displayName: [ ( value ) => value.length >= 1, 'El nombre es obligatorio.'],
+}
+
 export const RegisterPage = () => {
 
   // Utilizo el Hook personalizado "useForm", para obtener los campos del formulario que necesito
-  const { email, password, displayName, onInputChange, formState } = useForm( formData );
+  const {
+    formState,
+    isFormValid,
+    email,
+    emailValid,
+    password,
+    passwordValid,
+    displayName,
+    displayNameValid,
+    onInputChange,
+  } = useForm( formData, formValidations );
 
   // Evento "onSubmit" para enviar el formulario
   const onSubmit = ( event ) => {
