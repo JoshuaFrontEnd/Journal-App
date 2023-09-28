@@ -1,11 +1,11 @@
 import { signInWithGoogle } from '../../firebase/providers';
-import { checkingCredentials } from './';
+import { checkingCredentials, login, logout } from './';
 
 export const checkingAuthentication = ( email, password ) => {
 
   return async( dispatch ) => {
 
-    // Todas las "acciones despechadas" desde acá se ejecutaran de manera asincrona
+    // Todas las "acciones despachadas" desde acá se ejecutaran de manera asincrona
     dispatch( checkingCredentials() )
 
   }
@@ -19,7 +19,11 @@ export const startGoogleSignIn = () => {
     dispatch( checkingCredentials() );
 
     const result = await signInWithGoogle();
-    console.log({ result });
+
+    // Si sucede un error, tendre el mensaje de error seteado acá
+    if ( !result.ok ) return dispatch( logout( result.errorMessage ) );
+
+    dispatch( login( result ) );
 
   }
 }
