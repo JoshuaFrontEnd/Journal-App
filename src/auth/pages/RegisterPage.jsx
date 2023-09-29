@@ -1,8 +1,8 @@
 // Al importar el componente 'Link' desde 'react-router-dom' se genera un conflicto debido al alcance de nombre con el componente 'Link' de 'MUI', para solucionar esto uso un alias, asignando el nombre 'RouterLink' al 'Link' de 'react-router-dom'
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Button, Grid, Link, TextField, Typography, Alert } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { startCreatingUserWithEmailPassword } from '../../store/auth';
@@ -27,6 +27,12 @@ export const RegisterPage = () => {
 
   // Controlando que las validaciones solo se muestren la primera vez que se hace onSubmit en el formulario
   const [ formSubmitted, setFormSubmitted ] = useState( false );
+
+  // Obteniendo el mensaje de error desde el store
+  const { status, errorMessage } = useSelector( state => state.auth );
+
+  // Deshabilitar el boton de "Crear cuenta" cuando este verificando si la cuenta a registrar ya existe o no
+  const isCheckingAuthentication = useMemo( () => status === 'checking', [status] );
 
   // Utilizo el Hook personalizado "useForm", para obtener los campos del formulario que necesito
   const {
@@ -108,8 +114,18 @@ export const RegisterPage = () => {
           </Grid>
 
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
+
+            <Grid
+              item
+              xs={12}
+              display={ !!errorMessage ? '' : 'none' }
+            >
+              <Alert severity='error'>{ errorMessage }</Alert>
+            </Grid>
+
             <Grid item xs={12}>
               <Button
+                disabled={ isCheckingAuthentication }
                 type="submit"
                 variant="contained"
                 fullWidth>
