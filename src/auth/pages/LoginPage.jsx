@@ -3,15 +3,15 @@ import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Google } from '@mui/icons-material';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
-import { checkingAuthentication, startGoogleSignIn } from '../../store/auth';
+import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailAndPassword } from '../../store/auth';
 
 export const LoginPage = () => {
 
   //Obteniendo el "status" del "state"
-  const { status } = useSelector( state => state.auth );
+  const { status, errorMessage } = useSelector( state => state.auth );
 
   const isAuthenticating = useMemo( () => status === 'checking', [status] );
 
@@ -39,9 +39,16 @@ export const LoginPage = () => {
     dispatch( startGoogleSignIn() );
   }
 
+  // Boton para ingresar con algun correo registrado previamente en Firebase
+  const onFirebaseSignIn = () => {
+    console.log('onFirebaseSignIn');
+    dispatch( startLoginWithEmailAndPassword( formState ) );
+  }
+
   return (
     <AuthLayout title='Login'>
 
+      {/* REVISAR ESTO, ELIMINAR OBSUBMIT ??? */}
       <form onSubmit={ onSubmit }>
 
         <Grid container>
@@ -70,13 +77,29 @@ export const LoginPage = () => {
             />
           </Grid>
 
+          {/* Mostrar el error */}
+          <Grid
+            container
+            display={ !!errorMessage ? '' : 'none' }
+            sx={{ mt: 2 }}
+          >
+            <Grid
+              item
+              xs={12}
+            >
+              <Alert severity='error'>{ errorMessage }</Alert>
+            </Grid>
+          </Grid>
+
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12} sm={6}>
               <Button
                 disabled={ isAuthenticating }
                 type='submit'
                 variant="contained"
-                fullWidth>
+                fullWidth
+                onClick={ onFirebaseSignIn }
+              >
                 Login
               </Button>
             </Grid>
