@@ -10,11 +10,11 @@ export const JournalPage = () => {
 
       {/* <Typography>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit aspernatur porro dignissimos quo veniam commodi voluptas nobis maiores pariatur adipisci omnis, cumque natus amet, qui tempora nostrum ducimus et delectus.</Typography> */}
 
-      {/* <NothingSelectedView></NothingSelectedView> */}
+      <NothingSelectedView></NothingSelectedView>
 
-      <NoteView></NoteView>
+      {/* <NoteView></NoteView>
 
-      <ImageGallery></ImageGallery>
+      <ImageGallery></ImageGallery> */}
 
       <IconButton
         size= 'large'
