@@ -12,3 +12,8 @@ Proyecto en React/Material UI/Redux para poner en practica los siguientes concep
 - Google SingIn
 - Acciones Asíncronas
 - Mantener el estado de la autenticación
+- CRUD hacia Firestore
+- Expandiendo nuestro store añadiendo otros reducers
+- Seleccionar y subir archivos
+- Animaciones adicionales a nuestra aplicación
+- Limpieza en el logout
