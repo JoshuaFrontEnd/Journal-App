@@ -49,7 +49,7 @@ export const LoginPage = () => {
     <AuthLayout title='Login'>
 
       {/* REVISAR ESTO, ELIMINAR OBSUBMIT ??? */}
-      <form onSubmit={ onSubmit }>
+      <form onSubmit={ onSubmit } className='animate__animated animate__fadeIn animate__slower'>
 
         <Grid container>
 
