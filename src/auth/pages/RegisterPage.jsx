@@ -28,7 +28,7 @@ export const RegisterPage = () => {
   // Controlando que las validaciones solo se muestren la primera vez que se hace onSubmit en el formulario
   const [ formSubmitted, setFormSubmitted ] = useState( false );
 
-  // Obteniendo el mensaje de error desde el store
+  //Para obtener datos/estado del "store" en React/Redux se usa el Hook "useSelector", y se le pasa como parametro un callback, esta función tiene como primer argumento el "state" que tiene acceso a los "reducers" declarados en el "store" y estos a su vez acceden al valor del "state" actual, en este caso desestructuro "status" y "errorMessage" del "state", "state" creado en "thunks.js"
   const { status, errorMessage } = useSelector( state => state.auth );
 
   // Deshabilitar el boton de "Crear cuenta" cuando este verificando si la cuenta a registrar ya existe o no

@@ -7,6 +7,7 @@ import { login, logout } from '../store/auth';
 
 export const useCheckAuth = () => {
 
+  //Para obtener datos/estado del "store" en React/Redux se usa el Hook "useSelector", y se le pasa como parametro un callback, esta función tiene como primer argumento el "state" que tiene acceso a los "reducers" declarados en el "store" y estos a su vez acceden al valor del "state" actual, en este caso desestructuro "status" del "state", "state" creado en "thunks.js"
   const { status } = useSelector( state => state.auth );
   const dispatch = useDispatch();
 

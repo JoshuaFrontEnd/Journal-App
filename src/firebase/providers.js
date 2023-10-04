@@ -96,3 +96,10 @@ export const loginWithEmailAndPassword = async({ email, password }) => {
   }
 
 }
+
+// Funcion para "cerrar sesion" en Firebase
+export const logoutFirebase = async() => {
+
+  return await FirebaseAuth.signOut();
+
+ }

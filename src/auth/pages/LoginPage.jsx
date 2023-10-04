@@ -10,7 +10,7 @@ import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailAndPasswo
 
 export const LoginPage = () => {
 
-  //Obteniendo el "status" del "state"
+  //Para obtener datos/estado del "store" en React/Redux se usa el Hook "useSelector", y se le pasa como parametro un callback, esta función tiene como primer argumento el "state" que tiene acceso a los "reducers" declarados en el "store" y estos a su vez acceden al valor del "state" actual, en este caso desestructuro "status" y "errorMessage" del "state", "state" creado en "thunks.js"
   const { status, errorMessage } = useSelector( state => state.auth );
 
   const isAuthenticating = useMemo( () => status === 'checking', [status] );
