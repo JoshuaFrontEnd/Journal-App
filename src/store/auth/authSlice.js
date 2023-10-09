@@ -13,7 +13,7 @@ const initialState = {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  // Todas las acciones escritas acá tienen que ser asincronas
+  // Todas las acciones escritas acá tienen que ser sincronas
   reducers: {
     login: ( state, { payload } ) => {
       state.status = 'authenticated';

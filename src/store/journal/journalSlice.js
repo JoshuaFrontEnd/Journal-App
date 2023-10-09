@@ -17,7 +17,7 @@ const initialState = {
 export const journalSlice = createSlice({
   name: 'journal',
   initialState,
-  // Todas las acciones escritas acá tienen que ser asincronas
+  // Todas las acciones escritas acá tienen que ser sincronas
   reducers: {
     addNewEmptyNote: ( state, action ) => {
 
