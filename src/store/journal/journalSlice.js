@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isSaving: true,
+  isSaving: false,
   messageSaved: '',
   notes: [],
   active: null,
@@ -19,10 +19,18 @@ export const journalSlice = createSlice({
   initialState,
   // Todas las acciones escritas acá tienen que ser sincronas
   reducers: {
+    savingNewNote: ( state ) => {
+      state.isSaving = true;
+    },
     addNewEmptyNote: ( state, action ) => {
+
+      state.notes.push( action.payload );
+      state.isSaving = false;
 
     },
     setActiveNote: ( state, action ) => {
+
+      state.active = action.payload;
 
     },
     setNote: ( state, action ) => {
@@ -42,6 +50,7 @@ export const journalSlice = createSlice({
 });
 
 export const {
+  savingNewNote,
   addNewEmptyNote,
   setActiveNote,
   setNote,
