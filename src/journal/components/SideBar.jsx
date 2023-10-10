@@ -1,11 +1,16 @@
-import { TurnedInNot } from '@mui/icons-material';
-import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import { Box, Divider, Drawer, List, Toolbar, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { SideBarItem } from './';
 
 export const SideBar = ({ drawerWidth }) => {
 
   //Para obtener datos/estado del "store" en React/Redux se usa el Hook "useSelector", y se le pasa como parametro un callback, esta función tiene como primer argumento el "state" que tiene acceso a los "reducers" declarados en el "store" y estos a su vez acceden al valor del "state" actual, en este caso desestructuro "displayName" del "state", "state" creado en "thunks.js"
   const { displayName } = useSelector( state => state.auth );
+
+  // Obteniendo del estado las notas guardadas en CloudFirestore
+  const { notes } = useSelector( state => state.journal );
+
+  console.log( notes );
 
   return (
 
@@ -32,18 +37,8 @@ export const SideBar = ({ drawerWidth }) => {
 
         <List>
           {
-            ['Enero','Febrero','Marzo','Abril'].map( text => (
-              <ListItem key={ text } disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <TurnedInNot />
-                  </ListItemIcon>
-                  <Grid container>
-                    <ListItemText primary={ text } />
-                    <ListItemText secondary={ 'Exercitationem beatae minima alias autem' } />
-                  </Grid>
-                </ListItemButton>
-              </ListItem>
+            notes.map( note => (
+              <SideBarItem key={ note.id } { ...note } />
             ))
           }
         </List>
