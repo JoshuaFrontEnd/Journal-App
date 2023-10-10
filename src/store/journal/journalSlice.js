@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { loadNotes } from '../../helpers';
 
 const initialState = {
   isSaving: false,
@@ -34,6 +35,8 @@ export const journalSlice = createSlice({
 
     },
     setNote: ( state, action ) => {
+
+      state.notes = action.payload;
 
     },
     setSaving: ( state, action ) => {
