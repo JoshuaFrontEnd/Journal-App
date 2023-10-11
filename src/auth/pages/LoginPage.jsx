@@ -8,6 +8,11 @@ import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailAndPassword } from '../../store/auth';
 
+const formData = {
+  email: '',
+  password: ''
+}
+
 export const LoginPage = () => {
 
   //Para obtener datos/estado del "store" en React/Redux se usa el Hook "useSelector", y se le pasa como parametro un callback, esta función tiene como primer argumento el "state" que tiene acceso a los "reducers" declarados en el "store" y estos a su vez acceden al valor del "state" actual, en este caso desestructuro "status" y "errorMessage" del "state", "state" creado en "thunks.js"
@@ -19,10 +24,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
 
   // Datos de prueba formulario
-  const { email, password, onInputChange, formState } = useForm({
-    email: 'ioshi@gmail.com',
-    password: '123456'
-  });
+  const { email, password, onInputChange, formState } = useForm( formData );
 
   // Evento submit del boton del formulario
   const onSubmit = ( event ) => {
@@ -116,7 +118,7 @@ export const LoginPage = () => {
           </Grid>
 
           <Grid container direction='row' justifyContent='end'>
-            <Link component={RouterLink} color='inherit' to='/auth/register'>
+            <Link component={ RouterLink } color='inherit' to='/auth/register'>
               Crear una cuenta
             </Link>
           </Grid>

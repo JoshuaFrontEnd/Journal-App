@@ -19,6 +19,12 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     createValidators();
   }, [ formState ])
 
+  // El equipo de React recomienda usar diferentes "useEffect" de manera independiente para distintas tareas especificas, en vez de agrupar todas las tareas en uno solo
+  // Cada vez que cambien los datos del formulario "initialForm" voy a setear el formulario con esos nuevos datos
+  useEffect(() => {
+    setFormState( initialForm );
+  }, [ initialForm ])
+
   // Para que el formulario sea valido, todas las funciones de validacion deben retornar "null", con que una no retorne este valor sera considerado invalido y mostrara el error correspondiente
   const isFormValid = useMemo(() => {
 
