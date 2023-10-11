@@ -1,8 +1,20 @@
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { TurnedInNot } from '@mui/icons-material';
 import { Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { setActiveNote } from '../../store/journal';
 
-export const SideBarItem = ({ title = '', body, id }) => {
+export const SideBarItem = ( note ) => {
+
+  const { title, body, id, date, imageUrls } =  note ;
+
+  console.log( note );
+
+  const dispatch = useDispatch();
+
+  const onClickNote = () => {
+    dispatch( setActiveNote( note ) );
+  }
 
   // Funcion para mostrar solo los primeros 17 caracteres del titulo, si tiene mas le asigna tres puntos (...) al final de la oracion
   const newTitle = useMemo(() => {
@@ -12,14 +24,14 @@ export const SideBarItem = ({ title = '', body, id }) => {
   }, [ title ])
 
   return (
-    <ListItem disablePadding>
+    <ListItem disablePadding onClick={ onClickNote }>
       <ListItemButton>
         <ListItemIcon>
           <TurnedInNot />
         </ListItemIcon>
         <Grid container>
           <ListItemText primary={ newTitle } />
-          <ListItemText secondary={ 'Exercitationem beatae minima alias autem' } />
+          <ListItemText secondary={ body } />
         </Grid>
       </ListItemButton>
     </ListItem>
