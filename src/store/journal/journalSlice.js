@@ -39,10 +39,27 @@ export const journalSlice = createSlice({
       state.notes = action.payload;
 
     },
-    setSaving: ( state, action ) => {
+    setSaving: ( state ) => {
+
+      state.isSaving = true;
 
     },
     updateNote: ( state, action ) => {
+
+      state.isSaving = false;
+
+      // Como estamos usando Redux, es posible usar un metodo de javascript vanilla para modificar el array de notas, en este caso "map" regresa un nuevo arreglo, basado en el arreglo de notas base
+      state.notes = state.notes.map( note => {
+
+        // Si el "id" de la nota en Firestore, es igual al "id" de la nota activa, eso significa que la nota activa ha sido modificada, por lo tanto actualiza en Firestore los datos de esa nota
+        if ( note.id === action.payload.id ) {
+          return action.payload;
+        }
+
+        return note;
+      })
+
+      // Mostrar mensaje de actualizacion
 
     },
     deleteNoteById: ( state, action ) => {

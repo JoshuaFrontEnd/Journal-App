@@ -8,7 +8,7 @@ export const SideBarItem = ( note ) => {
 
   const { title, body, id, date, imageUrls } =  note ;
 
-  console.log( note );
+  // console.log( note );
 
   const dispatch = useDispatch();
 

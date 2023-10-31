@@ -9,7 +9,7 @@ export const JournalPage = () => {
 
   const { isSaving, active } = useSelector( state => state.journal );
 
-  console.log( active );
+  // console.log( active );
 
   const dispatch = useDispatch();
 
