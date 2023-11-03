@@ -6,7 +6,7 @@ import { setActiveNote } from '../../store/journal';
 
 export const SideBarItem = ( note ) => {
 
-  const { title, body, id, date, imageUrls } =  note ;
+  const { title, body } =  note ;
 
   // console.log( note );
 
