@@ -8,7 +8,7 @@ export const SideBar = ({ drawerWidth }) => {
   const { displayName } = useSelector( state => state.auth );
 
   // Obteniendo del estado las notas guardadas en CloudFirestore
-  const { notes, active } = useSelector( state => state.journal );
+  const { notes } = useSelector( state => state.journal );
 
   // console.log( notes, active );
 
