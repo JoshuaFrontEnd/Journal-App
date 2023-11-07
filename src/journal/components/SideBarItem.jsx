@@ -4,16 +4,14 @@ import { TurnedInNot } from '@mui/icons-material';
 import { Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { setActiveNote } from '../../store/journal';
 
-export const SideBarItem = ( note ) => {
+export const SideBarItem = ({ ...note }) => {
 
-  const { title, body } =  note ;
-
-  // console.log( note );
+  const { title, body } =  { ...note } ;
 
   const dispatch = useDispatch();
 
   const onClickNote = () => {
-    dispatch( setActiveNote( note ) );
+    dispatch( setActiveNote({ ...note }) );
   }
 
   // Funcion para mostrar solo los primeros 17 caracteres del titulo, si tiene mas le asigna tres puntos (...) al final de la oracion
@@ -24,8 +22,8 @@ export const SideBarItem = ( note ) => {
   }, [ title ])
 
   return (
-    <ListItem disablePadding onClick={ onClickNote }>
-      <ListItemButton>
+    <ListItem disablePadding>
+      <ListItemButton onClick={ onClickNote }>
         <ListItemIcon>
           <TurnedInNot />
         </ListItemIcon>

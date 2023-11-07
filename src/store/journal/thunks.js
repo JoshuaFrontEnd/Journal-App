@@ -25,7 +25,7 @@ export const startNewNote = () => {
 
     // Para grabar en Firebase usamos el "id (uid)" del usuario
     const newDoc = doc( collection( FirebaseDB, `${ uid }/journal/notes` ) );
-    const setDocResp = await setDoc( newDoc, newNote );
+    await setDoc( newDoc, newNote );
 
     // Para identificar las notas, en el arreglo que voy a crear con las mismas en el "state", le asigno a cada nota el "id" que me genera Firebase al crear un documento, este "id" no se agrega por cada nota en Firecloud, no es necessario, ya que ahí la referencia de la nota se hace hacia el documento
     newNote.id = newDoc.id;
