@@ -1,8 +1,8 @@
 // Todas las tareas escritas acá tienen que ser asincronas
 
-import { collection, doc, setDoc } from 'firebase/firestore/lite';
+import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../../firebase/config';
-import { addNewEmptyNote, savingNewNote, setActiveNote, setNote, setPhotosToActiveNote, setSaving, updateNote } from './';
+import { addNewEmptyNote, deleteNoteById, savingNewNote, setActiveNote, setNote, setPhotosToActiveNote, setSaving, updateNote } from './';
 import { fileUpload, loadNotes } from '../../helpers';
 
 // Creando una nueva nota
@@ -100,6 +100,24 @@ export const startUploadingFiles = ( files = [] ) => {
     const photosUrls = await Promise.all( fileUploadPromises );
 
     dispatch( setPhotosToActiveNote( photosUrls ) );
+
+  }
+}
+
+export const startDeletingNote = () => {
+  return async ( dispatch, getState ) => {
+
+    const { uid } = getState().auth;
+    const { active:noteActive } = getState().journal;
+
+    const docRef = doc( FirebaseDB, `${uid}/journal/notes/${ noteActive.id }` );
+
+    // Acá borro la nota en Firestore
+    await deleteDoc( docRef );
+
+    // Acá borro la nota del store
+    dispatch( deleteNoteById( noteActive.id ) );
+
 
   }
 }
