@@ -28,9 +28,11 @@ export const fileUpload = async ( file ) => {
 
   } catch (error) {
 
-    console.log( error );
+    // console.log( error );
 
-    throw new Error( error.message );
+    // throw new Error( error.message );
+
+    return null;
 
   }
 
