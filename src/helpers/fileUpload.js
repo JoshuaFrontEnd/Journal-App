@@ -2,7 +2,8 @@
 
 export const fileUpload = async ( file ) => {
 
-  if ( !file ) throw new Error('No se ha cargado ningún archivo');
+  // if ( !file ) throw new Error('No se ha cargado ningún archivo');
+  if ( !file ) return null;
 
   const cloudUrl = 'https://api.cloudinary.com/v1_1/dmtpqwfhm/upload';
 
