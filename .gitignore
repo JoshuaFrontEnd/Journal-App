@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore .env y .env* files
+# Ignore .env y .env* files except .env.template
 *.env*
+!.env.template
