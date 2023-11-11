@@ -31,7 +31,9 @@ export const LoginPage = () => {
     event.preventDefault();
 
     // Despacho el "Thunk"
-    dispatch( checkingAuthentication() );
+    // dispatch( checkingAuthentication() );
+
+    dispatch( startLoginWithEmailAndPassword({ email, password }) );
 
   }
 
@@ -51,7 +53,10 @@ export const LoginPage = () => {
     <AuthLayout title='Login'>
 
       {/* REVISAR ESTO, ELIMINAR OBSUBMIT ??? */}
-      <form onSubmit={ onSubmit } className='animate__animated animate__fadeIn animate__slower'>
+      <form
+      aria-label='submit-form'
+      onSubmit={ onSubmit }
+      className='animate__animated animate__fadeIn animate__slower'>
 
         <Grid container>
 
@@ -74,6 +79,9 @@ export const LoginPage = () => {
               placeholder="Contraseña"
               fullWidth
               name="password"
+              inputProps={{
+                'data-testid': 'password'
+              }}
               value={ password }
               onChange={ onInputChange }
             />
@@ -100,7 +108,7 @@ export const LoginPage = () => {
                 type='submit'
                 variant="contained"
                 fullWidth
-                onClick={ onFirebaseSignIn }
+                // onClick={ onFirebaseSignIn }
               >
                 Login
               </Button>
